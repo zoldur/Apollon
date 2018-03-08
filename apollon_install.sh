@@ -27,7 +27,7 @@ function compile_node() {
   strip Apollond
   cp Apollond /usr/local/bin
   cd -
-  #rm -rf $TMP_FOLDER >/dev/null 2>&1
+  rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
 }
 
