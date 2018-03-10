@@ -46,6 +46,18 @@ systemctl is-enabled Apollon #To check if Apollon service is enabled on boot
 ```  
 ***
 
+## Issues:
+For some reasons when Apollon starts for the first time, it will not  update the blockchain. Try this to fix
+```
+Apollond getinfo
+systemctl stop Apollon
+rm -r /root/.Apollon/{blk0001.dat,mncache.dat,peers.dat,smsgDB,smsg.ini,txleveldb}
+sleep 10
+systemctl start Apollon
+Apollond getinfo
+```
+***
+
 ## Donations
 
 Any donation is highly appreciated  
