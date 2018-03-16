@@ -9,6 +9,7 @@ COIN_REPO='https://github.com/apollondeveloper/ApollonCoin'
 COIN_NAME='Apollon'
 COIN_PORT=12116
 RPC_PORT=12117
+HOST=$(hostname)
 
 
 NODEIP=$(curl -s4 icanhazip.com)
@@ -277,9 +278,11 @@ function important_information() {
  echo -e " "
  echo -e "MASTERNODE SERVICE DETAILS"
  echo -e " "
+ echo -e "The masternode alias is (${GREEN}Alias*${NC}): ${RED}$HOST${NC}"
+ echo -e "Your server IP Address and Port are (${GREEN}Address*${NC}): ${RED}$NODEIP:$COIN_PORT${NC}"
+ echo -e "Your MASTERNODE PRIVATEKEY is (${GREEN}PrivKey*${NC}): ${RED}$COINKEY${NC}"
+ echo -e " "
  echo -e "The server configuration file is located at: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
- echo -e "Your server IP Address and Port are: ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "Your MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
  echo -e " "
  echo -e "=========================================================================================="
  echo -e " "
