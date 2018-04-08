@@ -1,8 +1,8 @@
 # Apollon
-Shell script to install an [Apollon Masternode](http://apolloncoin.io/) on a Linux server running Ubuntu 16.04. Use it on your own risk.
+Shell script to install an [Apollon Masternode](http://apolloncoin.io/) on a Linux server running Ubuntu 16.04. Use it on your own risk.  
 ***
 
-## Installation
+## Installation for version 1.0.4
 ```
 wget -q https://raw.githubusercontent.com/zoldur/Apollon/master/apollon_install.sh
 bash apollon_install.sh
@@ -55,6 +55,18 @@ rm -r /root/.Apollon/{blk0001.dat,mncache.dat,peers.dat,smsgDB,smsg.ini,txleveld
 sleep 10
 systemctl start Apollon
 Apollond getinfo
+```
+***
+
+## Wallet update:
+In order to update your wallet to version 1.0.4, please run the following commands:
+```
+systemctl stop Apollon
+rm Apollond.tar.gz >/dev/null 2>&1
+wget https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.4/Apollond.tar.gz
+tar xvzf Apollond.tar.gz
+cp Apollond /usr/local/bin
+systemctl start Apollon
 ```
 ***
 

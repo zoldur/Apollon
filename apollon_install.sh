@@ -3,9 +3,11 @@
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='Apollon.conf'
 CONFIGFOLDER='/root/.Apollon'
-COIN_DAEMON='/usr/local/bin/Apollond'
-COIN_CLI='/usr/local/bin/Apollond'
-COIN_REPO='https://github.com/apollondeveloper/ApollonCoin'
+COIN_DAEMON='Apollond'
+COIN_CLI='Apollond'
+COIN_PAHT='/usr/local/bin'
+COIN_TGZ='https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.4/Apollond.tar.gz'
+COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='Apollon'
 COIN_PORT=12116
 RPC_PORT=12117
@@ -18,18 +20,19 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-function compile_node() {
-  echo -e "Prepare to compile $COIN_NAME"
-  git clone  $COIN_REPO $TMP_FOLDER
-  cd $TMP_FOLDER/src
-  make -f makefile.unix
+function download_node() {
+  echo -e "Preparing to download ${GREEN}$COIN_NAME${NC}."
+  cd $TMP_FOLDER >/dev/null 2>&1
+  wget -q $COIN_TGZ
   compile_error
-  strip Apollond
-  cp Apollond /usr/local/bin
-  cd -
+  tar xvzf $COIN_ZIP >/dev/null 2>&1
+  compile_error
+  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
+  cd - >/dev/null 2>&1
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
 }
+
 
 function configure_systemd() {
   cat << EOF > /etc/systemd/system/$COIN_NAME.service
@@ -242,25 +245,6 @@ fi
 clear
 }
 
-function create_swap() {
- echo -e "Checking if swap space is needed."
- PHYMEM=$(free -g|awk '/^Mem:/{print $2}')
- SWAP=$(swapon -s)
- if [[ "$PHYMEM" -lt "2"  &&  -z "$SWAP" ]]
-  then
-    echo -e "${GREEN}Server is running with less than 2G of RAM without SWAP, creating 2G swap file.${NC}"
-    SWAPFILE=$(mktemp)
-    dd if=/dev/zero of=$SWAPFILE bs=1024 count=2M
-    chmod 600 $SWAPFILE
-    mkswap $SWAPFILE
-    swapon -a $SWAPFILE
- else
-  echo -e "${GREEN}The server is running with at least 2G of RAM, or a SWAP file is already in place.${NC}"
- fi
- clear
-}
-
-
 function important_information() {
  echo
  echo -e "================================================================================================================================"
@@ -290,7 +274,6 @@ clear
 
 checks
 prepare_system
-create_swap
-compile_node
+download_node
 setup_node
 
