@@ -58,8 +58,8 @@ Apollond getinfo
 ```
 ***
 
-## Wallet update:
-In order to update your wallet to version 1.0.4, please run the following commands:
+## Masternode update:
+In order to update your Masternode to version 1.0.4, please run the following commands:
 ```
 systemctl stop Apollon
 rm Apollond.tar.gz >/dev/null 2>&1
