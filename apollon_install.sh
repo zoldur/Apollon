@@ -5,7 +5,7 @@ CONFIG_FILE='Apollon.conf'
 CONFIGFOLDER='/root/.Apollon'
 COIN_DAEMON='Apollond'
 COIN_CLI='Apollond'
-COIN_PAHT='/usr/local/bin'
+COIN_PATH='/usr/local/bin'
 COIN_TGZ='https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.4/Apollond.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='Apollon'
@@ -27,6 +27,7 @@ function download_node() {
   wget -q $COIN_TGZ
   compile_error
   tar xvzf $COIN_ZIP >/dev/null 2>&1
+  chmod +x $COIN_DAEMON
   compile_error
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd - >/dev/null 2>&1
