@@ -198,10 +198,10 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
-  echo -e "${RED}$COIN_NAME is already installed - removing previous installation.${NC}"
-  systemctl stop $COIN_NAME.service
+  echo -e "${RED}Apollon is already installed - removing previous installation.${NC}"
+  systemctl stop Apollon.service
   sleep 3
-  rm /etc/systemd/system/$COIN_NAME.service
+  rm /etc/systemd/system/Apollon.service
   systemctl daemon-reload
 fi
 }
