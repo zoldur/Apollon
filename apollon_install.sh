@@ -9,8 +9,8 @@ COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.6/Apollond.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='ApollonCore'
-COIN_PORT=12116
-RPC_PORT=12117
+COIN_PORT=12218
+RPC_PORT=12217
 
 NODEIP=$(curl -s4 api.ipify.org)
 RED='\033[0;31m'
@@ -24,9 +24,9 @@ function download_node() {
   wget -q $COIN_TGZ
   compile_error
   tar xvzf $COIN_ZIP >/dev/null 2>&1
-  chmod +x $COIN_DAEMON
+  chmod +x $COIN_DAEMON $COIN_CLI
   compile_error
-  cp $COIN_DAEMON $COIN_PATH
+  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd - >/dev/null 2>&1
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
@@ -119,41 +119,26 @@ function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logintimestamps=1
 maxconnections=256
+#bind=$NODEIP
 masternode=1
-bind=$NODEIP
-masternodeaddr=$NODEIP:$COIN_PORT
+externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
-addnode=95.29.191.30:12117
-addnode=144.202.85.202:12116
-addnode=104.238.156.64:12116
-addnode=45.63.34.98:12116
-addnode=144.202.88.54:12116
-addnode=52.41.181.185:12116
-addnode=52.32.174.206:12116
-addnode=45.76.95.105:12117
-addnode=45.76.81.0:12117
-addnode=45.76.43.78:12116
-addnode=45.76.138.93:12116
-addnode=45.63.96.252:12117
-addnode=45.32.234.222:12116
-addnode=35.162.219.114:12116
-addnode=34.208.82.44:12116
-addnode=23.95.130.119:12120
-addnode=209.250.245.104:12116
-addnode=209.250.244.203:12116
-addnode=207.246.124.169:12116
-addnode=199.247.26.72:12117
-addnode=192.3.41.197:12129
-addnode=18.221.176.77:12116
-addnode=18.220.132.106:12116
-addnode=18.218.93.233:12116
-addnode=172.245.205.159:12124
-addnode=167.99.0.97:12118
-addnode=160.16.189.145:12116
-addnode=159.89.55.62:12118
-addnode=108.61.189.98:12116
-addnode=107.175.17.193:12117
-addnode=80.211.242.212:12117
+addnode=45.32.155.231:12218
+addnode=80.240.24.127:12218
+addnode=173.249.46.95:12218
+addnode=60.228.0.5:12218
+addnode=149.28.32.50:12218
+addnode=104.156.254.191:12218
+addnode=78.96.154.128:12218
+addnode=87.121.90.121:12218
+addnode=108.160.128.178:12218
+addnode=88.189.103.121:12218
+addnode=144.202.27.235:12218
+addnode=140.82.37.247:12218
+addnode=67.244.10.40:12218
+addnode=8.12.17.19:12218
+addnode=77.65.55.251:12218
+addnode=104.207.138.33:12218
 EOF
 }
 
@@ -258,6 +243,7 @@ function important_information() {
  echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
  echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
+ echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
  echo -e "================================================================================================================================"
 }
 
