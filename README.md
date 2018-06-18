@@ -2,8 +2,9 @@
 Shell script to install an [Apollon Masternode](http://apolloncoin.io/) on a Linux server running Ubuntu 16.04. Use it on your own risk.  
 ***
 
-## Installation for version 1.0.6
+## Installation for version 2.0.0
 ```
+rm apollon_install.sh >/dev/null 2>&1
 wget -q https://raw.githubusercontent.com/zoldur/Apollon/master/apollon_install.sh
 bash apollon_install.sh
 ```
@@ -12,64 +13,49 @@ bash apollon_install.sh
 ## Desktop wallet setup  
 
 After the MN is up and running, you need to configure the desktop wallet accordingly. Here are the steps:  
-1. Open the Apollon Desktop Wallet.  
+1. Open the ApollonCore Desktop Wallet.  
 2. Go to RECEIVE and create a New Address: **MN1**  
 3. Send **25000** XAP to **MN1**.  
 4. Wait for 16 confirmations.  
-5. Go to **Help -> "Debug Window - Console"**  
+5. Go to **Tools -> "Debug Console"**  
 6. Type the following command: **masternode outputs**  
-7. Go to **Masternodes** tab  
-8. Click **Create** and fill the details:  
-* Alias: **MN1**  
-* Address: **VPS_IP:PORT**  
-* Privkey: **Masternode Private Key**  
-* TxHash: **First value from Step 6**  
-* Output index:  **Second value from Step 6**  
-* Reward address: leave blank  
-* Reward %: leave blank  
-9. Click **OK** to add the masternode  
-10. Click **Start All**  
+7. Go to  **Tools -> "Open Masternode Configuration File"**
+8. Add the following entry:
+```
+Alias Address Privkey TxHash TxIndex
+```
+* Alias: **MN1**
+* Address: **VPS_IP:PORT**
+* Privkey: **Masternode Private Key**
+* TxHash: **First value from Step 6**
+* TxIndex:  **Second value from Step 6**
+9. Save and close the file.
+10. Go to **Masternode Tab**. If you tab is not shown, please enable it from: **Settings - Options - Wallet - Show Masternodes Tab**
+11. Click **Update status** to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is un
+12. Select your MN and click **Start Alias** to start it.
+13. Alternatively, open **Debug Console** and type:
+```
+masternode start-alias MN1
+``` 
+14. Login to your VPS and check your masternode status by running the following command. If you get **Status 9**, it means your masternode is active.
+```
+apollon-cli masternode status
+```
 ***
 
 ## Usage:
 ```
-Apollond masternode status  
-Apollond getinfo
+apollon-cli mnsync status
+apollon-cli masternode status  
+apollon-cli getinfo
 ```
 Also, if you want to check/start/stop **Apollon**, run one of the following commands as **root**:
-
 ```
-systemctl status Apollon #To check if Apollon service is running  
-systemctl start Apollon #To start Apollon service  
-systemctl stop Apollon #To stop Apollon service  
-systemctl is-enabled Apollon #To check if Apollon service is enabled on boot  
+systemctl status ApollonCore.service #To check if Apollon service is running  
+systemctl start ApollonCore.service #To start Apollon service  
+systemctl stop ApollonCore.service #To stop Apollon service  
+systemctl is-enabled ApollonCore.service #To check if Apollon service is enabled on boot  
 ```  
-***
-
-## Issues:
-For some reasons when Apollon starts for the first time, it will not  update the blockchain. Try this to fix
-```
-Apollond getinfo
-systemctl stop Apollon
-rm -r /root/.Apollon/{blk0001.dat,mncache.dat,peers.dat,smsgDB,smsg.ini,txleveldb}
-sleep 10
-systemctl start Apollon
-Apollond getinfo
-```
-***
-
-## Masternode update:
-In order to update your Masternode to version 1.0.6, please run the following commands:
-```
-cd /tmp
-systemctl stop Apollon
-rm Apollond.tar.gz >/dev/null 2>&1
-wget -N https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.6/Apollond.tar.gz
-tar xvzf Apollond.tar.gz
-chmod +x Apollond
-cp Apollond /usr/local/bin
-systemctl start Apollon
-```
 ***
 
 ## Donations
