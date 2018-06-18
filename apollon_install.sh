@@ -6,7 +6,8 @@ CONFIGFOLDER='/root/.ApollonCore'
 COIN_DAEMON='apollond'
 COIN_CLI='apollon-cli'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZ='https://github.com/apollondeveloper/ApollonCore/releases/download/v2.0.0.2/apollond-2.0.0-x86_64-linux.tar.gz'
+KERN_ARCH=$(uname -m)
+COIN_TGZ="https://github.com/apollondeveloper/ApollonCore/releases/download/v2.0.0.2/apollond-2.0.0-${KERN_ARCH}-linux.tar.gz"
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='ApollonCore'
 COIN_PORT=12218
@@ -20,7 +21,6 @@ NC='\033[0m'
 function download_node() {
   echo -e "Preparing to download ${GREEN}$COIN_NAME${NC}."
   cd $TMP_FOLDER >/dev/null 2>&1
-  rm $COIN_ZIP >/dev/null 2>&1
   wget -q $COIN_TGZ
   compile_error
   tar xvzf $COIN_ZIP >/dev/null 2>&1
@@ -77,8 +77,8 @@ EOF
 
 function create_config() {
   mkdir $CONFIGFOLDER >/dev/null 2>&1
-  RPCUSER=$(pwgen -s 8 1)
-  RPCPASSWORD=$(pwgen -s 15 1)
+  RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w14 | head -n1)
+  RPCPASSWORD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
   cat << EOF > $CONFIGFOLDER/$CONFIG_FILE
 rpcuser=$RPCUSER
 rpcpassword=$RPCPASSWORD
@@ -197,9 +197,10 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
-  echo -e "${RED}Apollon is already installed - removing previous installation.${NC}"
+if [ -n "$(pidof Apollond)" ] || [ -e "Apollond" ] ; then
+  echo -e "${RED}Old Apollond is already installed - removing previous installation.${NC}"
   systemctl stop Apollon.service
+  systemctl disable Apollon.service
   sleep 3
   rm /etc/systemd/system/Apollon.service
   systemctl daemon-reload
@@ -218,8 +219,8 @@ echo -e "Installing required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
 build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
-libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ unzip >/dev/null 2>&1
+libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
+libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev >/dev/null 2>&1
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
@@ -229,7 +230,7 @@ if [ "$?" -gt "0" ];
     echo "apt-get update"
     echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
 libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git pwgen curl libdb4.8-dev \
-bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban pkg-config libevent-dev unzip"
+bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw"
  exit 1
 fi
 

@@ -2,10 +2,10 @@
 Shell script to install an [Apollon Masternode](http://apolloncoin.io/) on a Linux server running Ubuntu 16.04. Use it on your own risk.  
 ***
 
+
 ## Installation for version 2.0.0
 ```
-rm apollon_install.sh >/dev/null 2>&1
-wget -q https://raw.githubusercontent.com/zoldur/Apollon/master/apollon_install.sh
+wget -N https://raw.githubusercontent.com/zoldur/Apollon/master/apollon_install.sh
 bash apollon_install.sh
 ```
 ***
@@ -31,7 +31,7 @@ Alias Address Privkey TxHash TxIndex
 * TxIndex:  **Second value from Step 6**
 9. Save and close the file.
 10. Go to **Masternode Tab**. If you tab is not shown, please enable it from: **Settings - Options - Wallet - Show Masternodes Tab**
-11. Click **Update status** to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is un
+11. Click **Update status** to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is u
 12. Select your MN and click **Start Alias** to start it.
 13. Alternatively, open **Debug Console** and type:
 ```
@@ -51,10 +51,10 @@ apollon-cli getinfo
 ```
 Also, if you want to check/start/stop **Apollon**, run one of the following commands as **root**:
 ```
-systemctl status ApollonCore.service #To check if Apollon service is running  
-systemctl start ApollonCore.service #To start Apollon service  
-systemctl stop ApollonCore.service #To stop Apollon service  
-systemctl is-enabled ApollonCore.service #To check if Apollon service is enabled on boot  
+systemctl status ApollonCore.service #To check if ApollonCore service is running  
+systemctl start ApollonCore.service #To start ApollonCore service  
+systemctl stop ApollonCore.service #To stop ApollonCore service  
+systemctl is-enabled ApollonCore.service #To check if ApollonCore service is enabled on boot  
 ```  
 ***
 
@@ -62,7 +62,7 @@ systemctl is-enabled ApollonCore.service #To check if Apollon service is enabled
 
 Any donation is highly appreciated  
 
-**XAP**: AMyyebyE8N5f79xLGtXRqLswjeHqbe2cBP  
+**XAP**: AVqfXNgNbcB4Zm6vNvLtzpRLKEPE4k5YHT  
 **BTC**: 3MQLEcHXVvxpmwbB811qiC1c6g21ZKa7Jh  
 **ETH**: 0x39d10fe57611c564abc255ffd7e984dc97e9bd6d  
 **LTC**: LNZpK4rCd1JVSB3rGKTAnTkudV9So9zexB
