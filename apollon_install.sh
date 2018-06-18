@@ -198,8 +198,11 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
-  echo -e "${RED}$COIN_NAME is already installed.${NC}"
-  exit 1
+  echo -e "${RED}$COIN_NAME is already installed - removing previous installation.${NC}"
+  systemctl stop $COIN_NAME.service
+  sleep 3
+  rm /etc/systemd/system/$COIN_NAME.service
+  systemctl daemon-reload
 fi
 }
 
