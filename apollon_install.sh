@@ -1,14 +1,14 @@
 #!/bin/bash
 
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='Apollon.conf'
-CONFIGFOLDER='/root/.Apollon'
-COIN_DAEMON='Apollond'
-COIN_CLI='Apollond'
+CONFIG_FILE='apollon.conf'
+CONFIGFOLDER='/root/.ApollonCore'
+COIN_DAEMON='apollond'
+COIN_CLI='apollon-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/apollondeveloper/ApollonCoin/releases/download/1.0.6/Apollond.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='Apollon'
+COIN_NAME='ApollonCore'
 COIN_PORT=12116
 RPC_PORT=12117
 
@@ -88,6 +88,7 @@ listen=1
 server=1
 daemon=1
 port=$COIN_PORT
+testnet=0
 EOF
 }
 
