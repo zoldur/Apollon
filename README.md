@@ -31,7 +31,7 @@ Alias Address Privkey TxHash TxIndex
 * TxIndex:  **Second value from Step 6**
 9. Save and close the file.
 10. Go to **Masternode Tab**. If you tab is not shown, please enable it from: **Settings - Options - Wallet - Show Masternodes Tab**
-11. Click **Update status** to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is u
+11. Click **Update status** to see your node. If it is not shown, close the wallet and start it again. Make sure the wallet is unlocked.
 12. Select your MN and click **Start Alias** to start it.
 13. Alternatively, open **Debug Console** and type:
 ```
