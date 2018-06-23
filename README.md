@@ -3,7 +3,7 @@ Shell script to install an [Apollon Masternode](http://apolloncoin.io/) on a Lin
 ***
 
 
-## Installation for version 2.0.0
+## Installation for version 2.0.1
 ```
 wget -N https://raw.githubusercontent.com/zoldur/Apollon/master/apollon_install.sh
 bash apollon_install.sh
