@@ -70,6 +70,7 @@ systemctl start ApollonCore.service
 rm apollond-2.0.1-$(uname -m)-linux.tar.gz
 apollon-cli getinfo
 ```
+Open your desktop wallet and start the node from there.
 ***
 
 ## Donations
