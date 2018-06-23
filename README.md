@@ -58,6 +58,20 @@ systemctl is-enabled ApollonCore.service #To check if ApollonCore service is ena
 ```  
 ***
 
+## Masternode update:
+In order to update your Apollon Masternode to version 2.0.1, please run the following commands:
+```
+cd /tmp
+wget https://github.com/apollondeveloper/ApollonCore/releases/download/v2.0.1.0/apollond-2.0.1-$(uname -m)-linux.tar.gz
+tar xvzf apollond-2.0.1-$(uname -m)-linux.tar.gz
+systemctl stop ApollonCore.service
+mv apollond apollon-cli /usr/local/bin
+systemctl start ApollonCore.service
+rm apollond-2.0.1-$(uname -m)-linux.tar.gz
+apollon-cli getinfo
+```
+***
+
 ## Donations
 
 Any donation is highly appreciated  
@@ -65,4 +79,4 @@ Any donation is highly appreciated
 **XAP**: AVqfXNgNbcB4Zm6vNvLtzpRLKEPE4k5YHT  
 **BTC**: 3MQLEcHXVvxpmwbB811qiC1c6g21ZKa7Jh  
 **ETH**: 0x39d10fe57611c564abc255ffd7e984dc97e9bd6d  
-**LTC**: LNZpK4rCd1JVSB3rGKTAnTkudV9So9zexB
+**LTC**: LNZpK4rCd1JVSB3rGKTAnTkudV9So9zexB  
