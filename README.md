@@ -37,7 +37,7 @@ Alias Address Privkey TxHash TxIndex
 ```
 masternode start-alias false MN1
 ``` 
-14. Login to your VPS and check your masternode status by running the following command. If you get **Status 9**, it means your masternode is active.
+14. Login to your VPS and check your masternode status by running the following command. If you get **status 4**, it means your masternode is active.
 ```
 apollon-cli masternode status
 ```
